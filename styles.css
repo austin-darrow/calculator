@@ -1,0 +1,50 @@
+body {
+    background-color: black;
+    display: flex;
+    padding-top: 5%;
+    justify-content: center;
+    align-items: center;
+}
+
+#display {
+    height: 5rem;
+    border: 1px solid black;
+    margin-bottom: 8px;
+    background-color: aliceblue;
+    text-align: right;
+    font-size: 70px;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+button {
+    width: 5rem;
+    height: 5rem;
+    font-size: large;
+    font-family: 'Courier New', Courier, monospace;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+#container-main {
+    padding: 10px;
+    background-color: lightgrey;
+    border: 2px solid gray;
+    display: inline-block;
+}
+
+.nums {
+    background-color: rgb(48, 44, 44);
+    color: whitesmoke;
+}
+
+#equals {
+    background-color: midnightblue;
+    color: whitesmoke;
+}
+
+#clear {
+    width: 332px;
+    height: 2rem;
+    background-color: midnightblue;
+    color: whitesmoke;
+}
