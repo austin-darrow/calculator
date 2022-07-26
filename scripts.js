@@ -1,4 +1,4 @@
-//basic calculator functions
+//BASIC FUNCTIONS
 function add(a,b) {
     return a+b;
 };
@@ -30,56 +30,124 @@ function operate(operation,a,b) {
     };
 };
 
-//display functions
-let display = document.querySelector('#display');
-let nums = document.querySelectorAll('.nums');
-let operators = document.querySelectorAll('.operators');
-let equals = document.querySelector('#equals');
-let clear = document.querySelector('#clear');
+//CONSTANTS & VARIABLE ASSIGNMENT
+const display = document.querySelector('#display');
+const nums = document.querySelectorAll('.nums');
+const operators = document.querySelectorAll('.operators');
+const equals = document.querySelector('#equals');
+const clear = document.querySelector('#clear');
+const backspace = document.querySelector('#backspace');
 
 let displayValue;
 let a;
 let b;
 let operation;
+let result;
 
+
+//DISPLAY NUMBERS
 nums.forEach(num => {
     num.addEventListener('click', () => {
+        if (result) {
+            a = Number(result);
+            b = undefined;
+            result = undefined;
+            display.textContent = '';
+        };
         if (num.value === '.') {
             if (displayValue % 1 === 0)
                 display.textContent = `${display.textContent}${num.value}`;
                 displayValue = Number(display.textContent);
         } else {
-            display.textContent = `${display.textContent}${num.value}`;
-            displayValue = Number(display.textContent);
+        display.textContent = `${display.textContent}${num.value}`;
+        displayValue = Number(display.textContent);
         };
     });
 });
 
+
+//MAIN OPERATION
 operators.forEach(operator => {
     operator.addEventListener('click', () => {
-        if (operator === '=') {
-            display.textContent = operate(operation,a,b);
-            a = Number(display.textContent);
-            b = undefined;
-            operation = undefined;
-            displayValue = undefined;
-        };
         if (a === undefined) {
             a = displayValue;
             display.textContent = '';
             operation = operator.value;
         } else if (b === undefined) {
             b = displayValue;
-            display.textContent = operate(operation,a,b);
-            a = undefined;
+            result = operate(operation,a,b).toFixed(3);
+            display.textContent = result;
+            operation = operator.value;
         };
     });
+});
+
+
+
+//SPECIAL BUTTONS
+equals.addEventListener('click', () => {
+    b = Number(display.textContent);
+    result = operate(operation,a,b).toFixed(3);
+    display.textContent = result;
+})
+
+backspace.addEventListener('click', () => {
+    let text = display.textContent.slice(0, -1);
+    display.textContent = text;
+    displayValue = Number(text);
 });
 
 clear.addEventListener('click', () => {
     display.textContent = '';
     displayValue = Number(display.textContent);
+    resetAll();
+});
+
+function resetAll () {
     a = undefined;
     b = undefined;
     operation = undefined;
+    result = undefined;
+};
+
+
+//KEYBOARD FUNCTIONALITY
+function afterOp (e) {
+    if (a === undefined) {
+        a = displayValue;
+        display.textContent = '';
+        operation = e.key;
+    } else if (b === undefined) {
+        b = displayValue;
+        result = operate(operation,a,b).toFixed(3);
+        display.textContent = result;
+        operation = e.key;
+    };
+};
+
+window.addEventListener('keydown', (e) => {
+    if (result) {
+        a = Number(result);
+        b = undefined;
+        result = undefined;
+        display.textContent = '';
+    };
+    if (e.key === '.') {
+        if (displayValue % 1 === 0)
+            display.textContent = `${display.textContent}${e.key}`;
+            displayValue = Number(display.textContent);
+    } else if (isFinite(e.key)) {
+        display.textContent = `${display.textContent}${e.key}`;
+        displayValue = Number(display.textContent);
+    } else if (e.key === 'Backspace') {
+        let text = display.textContent.slice(0, -1);
+        display.textContent = text;
+        displayValue = Number(text);
+    } else if (e.key === 'Enter') {
+        b = Number(display.textContent);
+        result = operate(operation,a,b).toFixed(3);
+        display.textContent = result;
+    } else if (e.key === '-' || e.key === '+' || e.key === '/' || e.key === '*') {
+        afterOp(e);
+    };
 });

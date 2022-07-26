@@ -43,7 +43,14 @@ button {
 }
 
 #clear {
-    width: 332px;
+    width: 165px;
+    height: 2rem;
+    background-color: midnightblue;
+    color: whitesmoke;
+}
+
+#backspace {
+    width: 165px;
     height: 2rem;
     background-color: midnightblue;
     color: whitesmoke;
