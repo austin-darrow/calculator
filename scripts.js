@@ -16,15 +16,17 @@ function multiply(a,b) {
 };
 
 function operate(operation,a,b) {
-    switch (true) {
-        case operation==='+':
-            return add(a,b);
-        case operation==='-':
-            return subtract(a,b);
-        case operation==='/':
-            return divide(a,b);
-        case operation==='*':
-            return multiply(a,b);
+    a = Number(a);
+    b = Number(b);
+    switch (operation) {
+        case '+':
+            return add(a,b).toFixed(3);
+        case '-':
+            return subtract(a,b).toFixed(3);
+        case '/':
+            return divide(a,b).toFixed(3);
+        case '*':
+            return multiply(a,b).toFixed(3);
         default:
             return "OOPS";
     };
@@ -37,8 +39,8 @@ const operators = document.querySelectorAll('.operators');
 const equals = document.querySelector('#equals');
 const clear = document.querySelector('#clear');
 const backspace = document.querySelector('#backspace');
+const history = document.querySelector('#history');
 
-let displayValue;
 let a;
 let b;
 let operation;
@@ -49,18 +51,16 @@ let result;
 nums.forEach(num => {
     num.addEventListener('click', () => {
         if (result) {
-            a = Number(result);
+            a = result;
             b = undefined;
             result = undefined;
             display.textContent = '';
         };
         if (num.value === '.') {
-            if (displayValue % 1 === 0)
-                display.textContent = `${display.textContent}${num.value}`;
-                displayValue = Number(display.textContent);
+            if ((display.textContent + num.value)% 1 === 0)
+                display.textContent = display.textContent + num.value;
         } else {
-        display.textContent = `${display.textContent}${num.value}`;
-        displayValue = Number(display.textContent);
+        display.textContent = display.textContent + num.value;
         };
     });
 });
@@ -70,12 +70,12 @@ nums.forEach(num => {
 operators.forEach(operator => {
     operator.addEventListener('click', () => {
         if (a === undefined) {
-            a = displayValue;
+            a = display.textContent;
             display.textContent = '';
             operation = operator.value;
         } else if (b === undefined) {
-            b = displayValue;
-            result = operate(operation,a,b).toFixed(3);
+            b = display.textContent;
+            result = operate(operation,a,b);
             display.textContent = result;
             operation = operator.value;
         };
@@ -86,20 +86,18 @@ operators.forEach(operator => {
 
 //SPECIAL BUTTONS
 equals.addEventListener('click', () => {
-    b = Number(display.textContent);
-    result = operate(operation,a,b).toFixed(3);
+    b = display.textContent;
+    result = operate(operation,a,b);
     display.textContent = result;
 })
 
 backspace.addEventListener('click', () => {
     let text = display.textContent.slice(0, -1);
     display.textContent = text;
-    displayValue = Number(text);
 });
 
 clear.addEventListener('click', () => {
     display.textContent = '';
-    displayValue = Number(display.textContent);
     resetAll();
 });
 
@@ -113,13 +111,24 @@ function resetAll () {
 
 //KEYBOARD FUNCTIONALITY
 function afterOp (e) {
+    if (result) {
+        a = undefined;
+        b = result;
+    };
     if (a === undefined) {
-        a = displayValue;
+        a = display.textContent;
         display.textContent = '';
         operation = e.key;
+        if (b) {
+            result = operate(operation,a,b);
+            display.textContent = result;
+            a = undefined;
+            b = result;
+            result = undefined;
+        };
     } else if (b === undefined) {
-        b = displayValue;
-        result = operate(operation,a,b).toFixed(3);
+        b = display.textContent;
+        result = operate(operation,a,b);
         display.textContent = result;
         operation = e.key;
     };
@@ -127,25 +136,21 @@ function afterOp (e) {
 
 window.addEventListener('keydown', (e) => {
     if (result) {
-        a = Number(result);
+        a = result;
         b = undefined;
         result = undefined;
         display.textContent = '';
     };
     if (e.key === '.') {
         if (displayValue % 1 === 0)
-            display.textContent = `${display.textContent}${e.key}`;
-            displayValue = Number(display.textContent);
+            display.textContent = display.textContent + e.key;
     } else if (isFinite(e.key)) {
-        display.textContent = `${display.textContent}${e.key}`;
-        displayValue = Number(display.textContent);
+        display.textContent = display.textContent + e.key;
     } else if (e.key === 'Backspace') {
-        let text = display.textContent.slice(0, -1);
-        display.textContent = text;
-        displayValue = Number(text);
+        display.textContent = display.textContent.slice(0, -1);
     } else if (e.key === 'Enter') {
-        b = Number(display.textContent);
-        result = operate(operation,a,b).toFixed(3);
+        b = display.textContent;
+        result = operate(operation,a,b);
         display.textContent = result;
     } else if (e.key === '-' || e.key === '+' || e.key === '/' || e.key === '*') {
         afterOp(e);
