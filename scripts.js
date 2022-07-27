@@ -52,6 +52,15 @@ function operate(operation,a,b) {
 //DISPLAY NUMBERS
 nums.forEach(num => {
     num.addEventListener('click', () => {
+        if (enterPressed) {
+            enterPressed = false;
+            a = undefined;
+            b = undefined;
+            operation = undefined;
+            result = undefined;
+            history.textContent = '';
+            display.textContent = '';
+        };
         if (result) { //When pressing a number key, if there's already a result on display, set a to that, reset everything else
             a = result;
             b = undefined;
@@ -71,6 +80,7 @@ nums.forEach(num => {
 //MAIN OPERATION
 operators.forEach(operator => {
     operator.addEventListener('click', () => {
+        if (enterPressed) enterPressed = false;
         if (operator === '-') {
             if (display.textContent === '0' || display.textContent === '') {
                 display.textContent = '-';
@@ -104,6 +114,7 @@ equals.addEventListener('click', () => {
     b = display.textContent;
     result = operate(operation,a,b);
     display.textContent = result;
+    enterPressed = true;
 });
 
 backspace.addEventListener('click', () => {
@@ -140,6 +151,15 @@ function afterOp (e) {
 
 window.addEventListener('keydown', (e) => {
     if (isFinite(e.key) || e.key === '.') {
+        if (enterPressed) {
+            enterPressed = false;
+            a = undefined;
+            b = undefined;
+            operation = undefined;
+            result = undefined;
+            history.textContent = '';
+            display.textContent = '';
+        };
         if (result) {
             a = result;
             b = undefined;
@@ -149,10 +169,12 @@ window.addEventListener('keydown', (e) => {
         if (e.key === '.' && display.textContent.includes('.')) return 
         if (display.textContent === '0') {
             display.textContent = e.key;
-        } else {display.textContent = display.textContent + e.key;
+        } else {
+            display.textContent = display.textContent + e.key;
         };
     };
     if (e.key === '-' || e.key === '+' || e.key === '/' || e.key === '*') {
+        if (enterPressed) enterPressed = false;
         if (e.key === '-') {
             if (display.textContent === '0' || display.textContent === '') {
                 display.textContent = '-';
@@ -165,6 +187,7 @@ window.addEventListener('keydown', (e) => {
         b = display.textContent;
         result = operate(operation,a,b);
         display.textContent = result;
+        enterPressed = true;
     };
     if (e.key === 'Backspace') {
         display.textContent = display.textContent.slice(0, -1);
