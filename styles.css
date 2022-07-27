@@ -73,3 +73,9 @@ button {
     background-color: midnightblue;
     color: whitesmoke;
 }
+
+@media screen and (max-width: 800px) {
+    #container-main {
+      width: 100%; /* The width is 100%, when the viewport is 800px or smaller */
+    }
+}
