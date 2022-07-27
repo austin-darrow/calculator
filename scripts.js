@@ -157,5 +157,5 @@ window.addEventListener('keydown', (e) => {
     if (e.key === 'Backspace') {
         display.textContent = display.textContent.slice(0, -1);
     };
-    if (e.key === 'Escape') reset;
+    if (e.key === 'Escape') reset();
 });
