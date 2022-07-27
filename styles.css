@@ -1,6 +1,7 @@
 body {
     background-color: black;
     display: flex;
+    flex-direction: column;
     padding-top: 5%;
     justify-content: center;
     align-items: center;
@@ -78,4 +79,12 @@ button {
     #container-main {
       width: 100%; /* The width is 100%, when the viewport is 800px or smaller */
     }
+}
+
+#credits {
+    font-size: 18px;
+    font-family:'Courier New', Courier, monospace;
+    color: whitesmoke;
+    padding-top: 40px;
+
 }
