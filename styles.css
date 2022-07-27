@@ -19,21 +19,22 @@ body {
 #history {
     font-size: 20px;
     text-align: right;
-    font-family: 'Courier New', Courier, monospace;
+    padding-right: 10px;
+    font-family: 'Roboto', sans-serif;
 }
 
 #display {
     background-color: aliceblue;
     text-align: right;
     font-size: 50px;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Roboto', sans-serif;
 }
 
 button {
     width: 5rem;
     height: 5rem;
     font-size: large;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Roboto', sans-serif;
     margin-top: 2px;
     margin-bottom: 2px;
 }
