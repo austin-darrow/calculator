@@ -76,7 +76,7 @@ button {
 }
 
 @media screen and (max-width: 800px) {
-    #container-main {
+    #container-main #credits {
       width: 100%; /* The width is 100%, when the viewport is 800px or smaller */
     }
 }
