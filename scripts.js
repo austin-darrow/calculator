@@ -71,6 +71,12 @@ nums.forEach(num => {
 //MAIN OPERATION
 operators.forEach(operator => {
     operator.addEventListener('click', () => {
+        if (operator === '-') {
+            if (display.textContent === '0' || display.textContent === '') {
+                display.textContent = '-';
+                return;
+            };
+        };
         if (a === undefined) { //if a hasn't been set, set a to the display, reset the display, set the operator to what was chosen
             a = display.textContent;
             display.textContent = '';
@@ -147,6 +153,12 @@ window.addEventListener('keydown', (e) => {
         };
     };
     if (e.key === '-' || e.key === '+' || e.key === '/' || e.key === '*') {
+        if (e.key === '-') {
+            if (display.textContent === '0' || display.textContent === '') {
+                display.textContent = '-';
+                return;
+            };
+        };
         afterOp(e);
     };
     if (e.key === 'Enter' || e.key === '=') {
