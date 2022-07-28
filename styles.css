@@ -44,6 +44,10 @@ button {
 }
 
 #container-main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     padding: 10px;
     background-color: lightgrey;
     border: 2px solid gray;
