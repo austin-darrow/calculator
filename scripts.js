@@ -111,6 +111,7 @@ operators.forEach(operator => {
 
 //SPECIAL BUTTONS
 equals.addEventListener('click', () => {
+    if (enterPressed === true) return;
     b = display.textContent;
     result = operate(operation,a,b);
     display.textContent = result;
@@ -184,6 +185,7 @@ window.addEventListener('keydown', (e) => {
         afterOp(e);
     };
     if (e.key === 'Enter' || e.key === '=') {
+        if (enterPressed === true) return;
         b = display.textContent;
         result = operate(operation,a,b);
         display.textContent = result;
